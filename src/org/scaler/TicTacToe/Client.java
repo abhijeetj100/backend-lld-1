@@ -1,8 +1,8 @@
 package org.scaler.TicTacToe;
 
 import org.scaler.TicTacToe.models.*;
-import org.scaler.TicTacToe.models.controllers.GameController;
-import org.scaler.TicTacToe.models.strategies.RowWinningStrategy;
+import org.scaler.TicTacToe.controllers.GameController;
+import org.scaler.TicTacToe.strategies.RowWinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;

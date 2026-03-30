@@ -1,9 +1,9 @@
-package org.scaler.TicTacToe.models.controllers;
+package org.scaler.TicTacToe.controllers;
 
 import org.scaler.TicTacToe.models.Game;
 import org.scaler.TicTacToe.models.GameState;
 import org.scaler.TicTacToe.models.Player;
-import org.scaler.TicTacToe.models.strategies.WinningStrategy;
+import org.scaler.TicTacToe.strategies.WinningStrategy;
 
 import java.util.List;
 

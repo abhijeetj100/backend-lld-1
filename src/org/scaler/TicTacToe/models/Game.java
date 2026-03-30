@@ -1,6 +1,6 @@
 package org.scaler.TicTacToe.models;
 
-import org.scaler.TicTacToe.models.strategies.WinningStrategy;
+import org.scaler.TicTacToe.strategies.WinningStrategy;
 
 import java.util.ArrayList;
 import java.util.HashSet;

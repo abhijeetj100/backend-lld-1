@@ -1,4 +1,4 @@
-package org.scaler.TicTacToe.models.strategies;
+package org.scaler.TicTacToe.strategies;
 
 public interface WinningStrategy {
     public void checkWinner();
