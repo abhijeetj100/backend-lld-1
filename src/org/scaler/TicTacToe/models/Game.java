@@ -85,6 +85,10 @@ public class Game {
         return new Builder();
     }
 
+    public void displayBoard() {
+        board.display();
+    }
+
     public static class Builder{
         private int dimension;
         private List<Player> players;

@@ -24,7 +24,7 @@ public class GameController {
     }
 
     public GameState checkState(Game game){
-        return null;
+        return game.getGameState();
     }
 
     public void makeMove(Game game){
@@ -38,4 +38,19 @@ public class GameController {
     public void undo(){
 
     }
+
+    public void display(Game game) {
+        game.displayBoard();
+    }
 }
+
+/* 1. Start the game: Create, set the attribites, taking the input : validate
+*  while the gameState IN_PROGRESS
+*  2. Display the board
+*  3. Make the move: input, make the move, update the state
+    *  4. Check the state
+    *   if the gameState is SUCCESS
+    *  5. Get the winner and display
+    *  else if gameState is DRAW
+    *  6. Declare the draw
+* */

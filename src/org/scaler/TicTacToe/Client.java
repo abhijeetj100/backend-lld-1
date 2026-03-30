@@ -16,10 +16,29 @@ public class Client {
         players.add(new HumanPlayer(1, "Player 1", PlayerType.HUMAN, new Symbol('X')));
         players.add(new BotPlayer(2, "Bot", PlayerType.BOT, new Symbol('O'), BotDifficultyLevel.EASY));
 
-        Game g1 = gc.startGame(3, players, List.of(new RowWinningStrategy()));
+        Game game = gc.startGame(
+                3,
+                players,
+                List.of(new RowWinningStrategy())
+        );
 
 //        Game g2 = gc.startGame();
-        gc.makeMove(g1);
+        gc.display(game);
+
+        while(gc.checkState(game).equals(GameState.IN_PROGRESS)){
+            gc.makeMove(game);
+        }
+
+        if(gc.checkState(game).equals(GameState.SUCCESS)){
+            System.out.println("Winner is: " + gc.getWinner(game).getName());
+        }
+        else if(gc.checkState(game).equals(GameState.DRAW)){
+            System.out.println("Game is a draw!");
+        }
+
+
+
+        gc.makeMove(game);
 
 
 
@@ -28,4 +47,11 @@ public class Client {
 
 /* 1. Create your Models
    2. Create your Controllers and basic interaction with the client
+   3. Make sure that every model has a constructor
+   4. Implement the functionalities one by one
+* */
+
+/* HomeWork
+    1. Create other strategies: Try to implement the function before next class.
+    2. Clean the code.
 * */
