@@ -11,19 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
 
-    - name: Compile Java source files
-      run: |
-        mkdir -p out
-        javac -d out -sourcepath src $(find src -name "*.java")
+      - name: Compile Java source files
+        run: |
+          mkdir -p out
+          # collect all java sources into a file to avoid argument list limits
+          find src -name '*.java' > sources.txt || true
+          if [ ! -s sources.txt ]; then
+            echo "No Java source files found under src/"
+            exit 1
+          fi
+          javac -d out -sourcepath src @sources.txt
 
-    - name: Display compilation success
-      run: echo "Build completed successfully!"
-
+      - name: Display compilation success
+        run: echo "Build completed successfully!"
