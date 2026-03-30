@@ -1,6 +1,6 @@
 package org.scaler.TicTacToe.models.strategies;
 
-public class RowWInningStrategy implements WinningStrategy{
+public class RowWinningStrategy implements WinningStrategy{
 
     @Override
     public void checkWinner(){
