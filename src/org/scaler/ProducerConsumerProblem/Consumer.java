@@ -10,7 +10,7 @@ public class Consumer implements Runnable{
     @Override
     public void run() {
         while(true){
-            if(store.getItems().size() > 0){
+            if(!store.getItems().isEmpty()){
                 store.removeItem();
             }
         }

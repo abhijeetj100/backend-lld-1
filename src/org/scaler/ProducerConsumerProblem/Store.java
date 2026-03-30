@@ -27,7 +27,6 @@ public class Store {
 
     public void removeItem(){
         System.out.println("Consumer consumption time, current size "+this.items.size());
-//        this.items.remove(this.items.size()-1);
-        this.items.removeLast();
+        this.items.remove(this.items.size()-1);
     }
 }
