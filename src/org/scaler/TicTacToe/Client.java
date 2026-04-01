@@ -7,8 +7,10 @@ import org.scaler.TicTacToe.strategies.RowWinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Client {
+    static Scanner scn = new Scanner(System.in);
     public static void main(String[] args) {
         System.out.println("Welcome to Tic Tac Toe game!");
         GameController gc = new GameController();
@@ -28,8 +30,14 @@ public class Client {
 
         while(gc.checkState(game).equals(GameState.IN_PROGRESS)){
             gc.makeMove(game);
-            gc.undo(game);
             gc.display(game);
+
+            System.out.println("Do you want to undo?");
+            boolean undo = scn.nextBoolean();
+            if(undo){
+                gc.undo(game);
+                gc.display(game);
+            }
         }
 
         if(gc.checkState(game).equals(GameState.SUCCESS)){

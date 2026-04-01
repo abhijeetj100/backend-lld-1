@@ -11,7 +11,7 @@ public class ColumnWinningStrategy implements WinningStrategy{
     @Override
     public boolean checkWinner(Board board, Move lastMove) {
         int col = lastMove.getCell().getCol();
-        Character sym = lastMove.getCell().getSymbol().getSym();
+        Character sym = lastMove.getPlayer().getSymbol().getSym();
 
         if (!counts.containsKey(col)) {
             counts.put(col, new HashMap<>());
@@ -26,6 +26,22 @@ public class ColumnWinningStrategy implements WinningStrategy{
         countCol.put(sym, countCol.get(sym) + 1);
 
         return countCol.get(sym) == board.getSize();
+    }
+
+    @Override
+    public void undo(Board board, Move lastMove) {
+        int col = lastMove.getCell().getCol();
+        HashMap<Character, Integer> countCol = counts.get(col);
+        if(countCol == null) return;
+        Character sym = lastMove.getPlayer().getSymbol().getSym();
+
+        if (!countCol.containsKey(sym)) {
+            return;
+        }
+        int symCount = countCol.get(sym);
+        if (symCount > 0) {
+            countCol.put(sym, symCount - 1);
+        }
     }
 
 }

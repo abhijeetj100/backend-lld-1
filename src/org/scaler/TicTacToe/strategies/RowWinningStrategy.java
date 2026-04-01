@@ -20,7 +20,7 @@ public class RowWinningStrategy implements WinningStrategy{
 //         1 -> {{'X':count}}
 
         int row = lastMove.getCell().getRow();
-        Character sym = lastMove.getCell().getSymbol().getSym();
+        Character sym = lastMove.getPlayer().getSymbol().getSym();
 //        Character sym = lastMove.getPlayer().getSymbol().getSym();
 
         if(!counts.containsKey(row)){
@@ -44,5 +44,26 @@ public class RowWinningStrategy implements WinningStrategy{
 
 
 
+    }
+
+    @Override
+    public void undo(Board board, Move lastMove){
+        int row = lastMove.getCell().getRow();
+        HashMap<Character, Integer> countRow = counts.get(row);
+
+        if(countRow == null) return;
+
+
+        // better than .getCell() since cell is mutable, but not Player
+        Character sym = lastMove.getPlayer().getSymbol().getSym();
+
+        if(!countRow.containsKey(sym)){
+            return;
+        }
+
+        int symCount = countRow.get(sym);
+        if(symCount > 0){
+            countRow.put(sym, symCount-1);
+        }
     }
 }

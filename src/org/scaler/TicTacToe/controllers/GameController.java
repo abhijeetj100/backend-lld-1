@@ -36,7 +36,7 @@ public class GameController {
     }
 
     public void undo(Game game){
-//        game.undo();
+        game.undo();
     }
 
     public void display(Game game) {

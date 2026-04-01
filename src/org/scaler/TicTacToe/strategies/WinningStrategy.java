@@ -5,5 +5,6 @@ import org.scaler.TicTacToe.models.Move;
 
 public interface WinningStrategy {
     public boolean checkWinner(Board board, Move lastMove);
+    public void undo(Board board, Move lastMove);
 
 }

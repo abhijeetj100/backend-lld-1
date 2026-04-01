@@ -109,6 +109,21 @@ public class Game {
         return false;
     }
 
+//    public void checkWinnerHelper(Move move, Player currentPlayer){
+//        // we need to confirm if there is a change in game state
+//        if(checkWinner(move)){
+//            setWinner(currentPlayer);
+//            setGameState(GameState.SUCCESS);
+//        }
+//        else if(moves.size() == board.getSize()*board.getSize()){
+//            setWinner(null);
+//            setGameState(GameState.DRAW);
+//        }else{
+//            setWinner(null);
+//            setGameState(GameState.IN_PROGRESS);
+//        }
+//    }
+
     public void makeMove() {
         Player currentPlayer = players.get(nextPlayerIndex);
 
@@ -134,7 +149,7 @@ public class Game {
 
         moves.add(move);
 
-        nextPlayerIndex = (nextPlayerIndex+1)%players.size();
+        nextPlayerIndex = (nextPlayerIndex+1) % players.size();
 
         // we need to confirm if there is a change in game state
         if(checkWinner(move)){
@@ -145,6 +160,38 @@ public class Game {
             setWinner(null);
             setGameState(GameState.DRAW);
         }
+//        this.checkWinnerHelper(move, currentPlayer);
+    }
+
+    public void undo(){
+        if(moves.isEmpty()) {
+            System.out.println("No moves yet played");
+            return;
+        }
+
+//      Move lastMove = moves.get(moves.size()-1);
+        Move lastMove = moves.getLast();
+
+        // we also need to update the HashMap from the winning strategies
+        // need an undo for the winning strategies as well
+        for(WinningStrategy strategy : winningStrategies){
+            strategy.undo(board, lastMove);
+        }
+        // since this cell points to the same cell as grid, no need to update it there a well, same reference
+        Cell cell = lastMove.getCell();
+        cell.setSymbol(null);
+        cell.setCellState(CellState.EMPTY);
+        nextPlayerIndex = (players.size() + nextPlayerIndex - 1) % players.size();
+
+
+        moves.removeLast();
+
+        // Reset the winner in case that was set !!!
+        setWinner(null);
+        setGameState(GameState.IN_PROGRESS);
+
+
+//        this.checkWinnerHelper(moves.getLast(), moves.getLast().getPlayer());
     }
 
     public static class Builder{
