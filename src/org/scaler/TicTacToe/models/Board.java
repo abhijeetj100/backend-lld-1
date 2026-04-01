@@ -13,7 +13,7 @@ public class Board {
         for(int i = 0; i < size; i++){
             List<Cell> row = new ArrayList<>();
             for(int j = 0; j < size; j++){
-                row.add(new Cell(i, j));
+                row.add(new Cell(i, j)); // setting up the new empty cell
             }
             grid.add(row);
         }
@@ -42,5 +42,9 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public void makeMove() {
+
     }
 }

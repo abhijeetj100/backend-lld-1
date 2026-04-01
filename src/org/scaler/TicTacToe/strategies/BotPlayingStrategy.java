@@ -3,7 +3,6 @@ package org.scaler.TicTacToe.strategies;
 import org.scaler.TicTacToe.models.Board;
 import org.scaler.TicTacToe.models.Move;
 
-public interface WinningStrategy {
-    public boolean checkWinner(Board board, Move lastMove);
-
+public interface BotPlayingStrategy {
+    public Move makeMove(Board board);
 }

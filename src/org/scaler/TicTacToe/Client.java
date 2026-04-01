@@ -2,6 +2,7 @@ package org.scaler.TicTacToe;
 
 import org.scaler.TicTacToe.models.*;
 import org.scaler.TicTacToe.controllers.GameController;
+import org.scaler.TicTacToe.strategies.ColumnWinningStrategy;
 import org.scaler.TicTacToe.strategies.RowWinningStrategy;
 
 import java.util.ArrayList;
@@ -13,13 +14,13 @@ public class Client {
         GameController gc = new GameController();
 
         List<Player> players = new ArrayList<>();
-        players.add(new HumanPlayer(1, "Player 1", PlayerType.HUMAN, new Symbol('X')));
+        players.add(new HumanPlayer(1, "Abhijeet", PlayerType.HUMAN, new Symbol('X')));
         players.add(new BotPlayer(2, "Bot", PlayerType.BOT, new Symbol('O'), BotDifficultyLevel.EASY));
 
         Game game = gc.startGame(
                 3,
                 players,
-                List.of(new RowWinningStrategy())
+                List.of(new RowWinningStrategy(), new ColumnWinningStrategy())
         );
 
 //        Game g2 = gc.startGame();
@@ -27,6 +28,8 @@ public class Client {
 
         while(gc.checkState(game).equals(GameState.IN_PROGRESS)){
             gc.makeMove(game);
+            gc.undo(game);
+            gc.display(game);
         }
 
         if(gc.checkState(game).equals(GameState.SUCCESS)){

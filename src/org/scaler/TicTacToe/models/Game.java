@@ -13,12 +13,12 @@ public class Game {
     private int nextPlayerIndex;
     private List<Move> moves;
     private GameState gameState;
-    private List<WinningStrategy> winningTStrategies;
+    private List<WinningStrategy> winningStrategies;
 
     private Game(Builder builder){
         this.board = new Board(builder.dimension);
         this.players = builder.players;
-        this.winningTStrategies = builder.winningStrategies;
+        this.winningStrategies = builder.winningStrategies;
         winner = null;
         nextPlayerIndex = 0;
         moves = new ArrayList<>();
@@ -73,12 +73,12 @@ public class Game {
         this.gameState = gameState;
     }
 
-    public List<WinningStrategy> getWinningTStrategies() {
-        return winningTStrategies;
+    public List<WinningStrategy> getWinningStrategies() {
+        return winningStrategies;
     }
 
-    public void setWinningTStrategies(List<WinningStrategy> winningTStrategies) {
-        this.winningTStrategies = winningTStrategies;
+    public void setWinningStrategies(List<WinningStrategy> winningStrategies) {
+        this.winningStrategies = winningStrategies;
     }
 
     public static Builder getBuilder(){
@@ -87,6 +87,64 @@ public class Game {
 
     public void displayBoard() {
         board.display();
+    }
+
+    private boolean validateMove(Move move) {
+        int row = move.getCell().getRow();
+        int col = move.getCell().getCol();
+
+        // if input is outside boundary
+        if(row<0 || row>board.getSize()-1 || col<0 || col>board.getSize()-1){
+            return false;
+        }
+        return board.getGrid().get(row).get(col).getCellState().equals(CellState.EMPTY); // for now
+    }
+
+    public boolean checkWinner(Move move){
+        for(WinningStrategy strategy:winningStrategies){
+            if(strategy.checkWinner(board, move)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void makeMove() {
+        Player currentPlayer = players.get(nextPlayerIndex);
+
+        System.out.println("It's "+currentPlayer.getName() + "'s turn! Please make the move");
+
+        Move move = currentPlayer.makeMove(this.board); // HumanPlayer or BotPlayer
+
+        if(!validateMove(move)){
+            System.out.println("Not a valid move!");
+            return;
+        }
+
+        int row = move.getCell().getRow();
+        int col = move.getCell().getCol();
+
+        Cell cellToChange = board.getGrid().get(row).get(col);
+
+        cellToChange.setSymbol(currentPlayer.getSymbol());
+        cellToChange.setCellState(CellState.FILLED);
+
+        move.setCell(cellToChange);
+//        move.setPlayer(currentPlayer); // redundant -- as already set in makeMove(this.board)
+
+        moves.add(move);
+
+        nextPlayerIndex = (nextPlayerIndex+1)%players.size();
+
+        // we need to confirm if there is a change in game state
+        if(checkWinner(move)){
+            setWinner(currentPlayer);
+            setGameState(GameState.SUCCESS);
+        }
+        else if(moves.size() == board.getSize()*board.getSize()){
+            setWinner(null);
+            setGameState(GameState.DRAW);
+        }
     }
 
     public static class Builder{

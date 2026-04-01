@@ -1,10 +1,13 @@
 package org.scaler.TicTacToe.models;
 
+import java.util.Scanner;
+
 public abstract class Player {
     private int id;
     private String name;
     private PlayerType playerType;
     private Symbol symbol;
+    private final Scanner scn = new Scanner(System.in);
 
     public Player(int id, String name, PlayerType playerType, Symbol symbol) {
         this.id = id;
@@ -43,5 +46,16 @@ public abstract class Player {
 
     public void setSymbol(Symbol symbol) {
         this.symbol = symbol;
+    }
+
+    public Move makeMove(Board board) {
+        System.out.println("Please enter the row where you want to place the Symbol");
+        int r = scn.nextInt();
+        System.out.println("Please enter the column where you want to place the Symbol");
+        int c = scn.nextInt();
+
+        // cannot directly using board.getGrid().get(r).get(c) since the move is not yet validated in "Game.java"
+        return new Move(new Cell(r, c), this);
+
     }
 }
